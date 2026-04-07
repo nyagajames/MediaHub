@@ -1,0 +1,37 @@
+<!-- extends is a jinja templating keyword for import i.e makes elements and links in the html file accessible in this new html i.e base.html content is now available in login.html -->
+{% extends 'base.html' %}
+
+{% block title %}Login - MediaHub{% endblock %}
+<!-- we use the block keyword to dynamically change content showcased to the user from the default base.html -->
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Login</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- form is a special file in django that dynamically sets the form fields required for the html form page via the apps forms.py -->
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            <!-- field showcases the input element together with necessary validations . if any error then fields.errors will be able to capture and alert the user based of the error message -->
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="{% url 'accounts:password_reset' %}">Forgot Password?</a>
+                </div>
+                <div class="text-center mt-2">
+                    <p>Don't have an account? <a href="{% url 'accounts:register' %}">Register here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
