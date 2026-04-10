@@ -70,3 +70,4 @@ class UserProfileForm(forms.ModelForm):
                 'class' : 'form-control', 'rows' : 3
             })
         }
+        
